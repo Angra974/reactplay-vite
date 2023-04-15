@@ -1,4 +1,5 @@
 /// <reference types="cypress" />
+/// <reference types="@cypress-audit/lighthouse" />
 
 import { CONTRIBUTORS_COUNT, TWEET_COUNT } from '../support/constant';
 
@@ -42,4 +43,15 @@ describe('Test home page', () => {
       CONTRIBUTORS_COUNT
     );
   });
+
+  it("should verify the lighthouse scores with thresholds", function () {
+  // For each of these you can specify whatever threshold you want
+  cy.lighthouse({
+    performance: 90,
+    accessibility: 90, // This is the a11y specific parameter
+    "best-practices": 90,
+    seo: 90,
+    pwa: 90,
+  });
+});
 });

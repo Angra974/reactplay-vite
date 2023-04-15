@@ -22,7 +22,7 @@ export const SearchBox = ({ reset }) => {
   };
 
   const onClearFilter = () => {
-    setQuery(undefined);
+    setQuery({});
     navigate(`/plays`);
   };
 
@@ -45,7 +45,7 @@ export const SearchBox = ({ reset }) => {
             <AiOutlineClose data-testid="plays-search-box-icon" size="24px" />
           </button>
         ) : null}
-        {/* <FilterPlays query={query} reset={reset} onChange={(q) => onChange(q)} /> */}
+        <FilterPlays query={query} reset={reset} onChange={(q) => onChange(q)} />
         {/* <FilterPlays query={query} onChange={(q) => onChange(q)} /> */}
       </div>
     </div>

@@ -32,13 +32,11 @@ const PlayThumbnail = ({ play }) => {
   const likeObject = () => {
     const { play_like } = play;
     const number = countByProp(play_like, 'liked', true);
+    let liked = false;
     if (isAuthenticated) {
-      const liked = play_like.find((i) => i.user_id === userId)?.liked;
-
-      return { liked, number };
+        liked = play_like.find((i) => i.user_id === userId)?.liked;
     }
-
-    return { liked: false, number };
+    return { liked, number };
   };
 
   useEffect(() => {
@@ -52,7 +50,6 @@ const PlayThumbnail = ({ play }) => {
       // with the name cover.png
       import(/* @vite-ignore */ `../../plays/${play.slug}/cover.png`)
         .then((Cover) => {
-          console.log(Cover);
           setCover(Cover.default);
         })
         .catch((err) => {

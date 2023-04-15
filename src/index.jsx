@@ -5,7 +5,8 @@ import './index.css';
 
 import { createRoot } from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
-// import register from './registerServiceWorker';
+import { registerSW } from "virtual:pwa-register";
+
 import ErrorBoundry from './ErrorBoundary/ErrorBoundary';
 // import Notification from 'common/components/Notification';
 import 'react-toastify/dist/ReactToastify.min.css';
@@ -13,6 +14,18 @@ import 'react-toastify/dist/ReactToastify.min.css';
 // inside your starter code, do this
 
 const Notification = lazy(() => import('common/components/Notification'));
+
+// add this to prompt for a refresh
+const updateSW = registerSW({
+  onNeedRefresh() {
+    if (confirm("New content available. Reload?")) {
+      updateSW(true);
+    }
+  },
+});
+
+
+console.log('REACT_APP_TESTER = ' + process.env.REACT_APP_TESTER);
 
 /** removing console statement in react prod build */
 /* eslint-disable no-console */
@@ -58,7 +71,7 @@ const container = document.getElementById('root');
 createRoot(container).render(<Index />);
 
 // Makes the app to work offline and load faster
-// register();
+//register();
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

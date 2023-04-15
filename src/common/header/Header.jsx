@@ -30,8 +30,8 @@ const Header = () => {
     }
     if (pathName === '/') {
       setShowHideBits({
-        showSearch: false,
-        showBrowse: true,
+        showSearch: true,
+        showBrowse: false,
         setHeaderStyle: false,
         showActivityTimer: true
       });

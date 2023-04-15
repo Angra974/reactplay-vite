@@ -1,1 +1,0 @@
-import{j as e,aK as o}from"./vendor-969509d2.js";import"./__commonjsHelpers__-8b4586d6.js";function s(){return e(o,{closeOnClick:!0,draggable:!0,pauseOnFocusLoss:!0,pauseOnHover:!0,autoClose:5e3,hideProgressBar:!1,newestOnTop:!1,position:"top-right",rtl:!1,theme:"light"})}export{s as default};

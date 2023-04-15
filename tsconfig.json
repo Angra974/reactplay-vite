@@ -3,7 +3,7 @@
     "target": "ES6",
     "baseUrl": ".",
     "useDefineForClassFields": true,
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "lib": ["DOM", "DOM.Iterable", "ESNext", "WebWorker"],
     "allowJs": false,
     "skipLibCheck": true,
     "esModuleInterop": false,
@@ -16,17 +16,20 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "types": ["vite/client", "node"],
-        "paths": {
-        "@/*": ["./src/*"],
-        "common":  ["./src/common/*"],
-        "ErrorBondary":  ["./src/ErrorBondary/*"],
-        "images":  ["./src/images/*"],
-        "meta":  ["./src/meta/*"],
-        "plays":  ["./src/plays/*"]
+    "typeRoots": [
+		"node_modules/@types"
+	],
+	"types": ["vite/client", "node","vite-plugin-pwa/client"],
+    "paths": {
+        "@/*": ["src/*"],
+        "common":  ["src/common/*"],
+        "ErrorBondary":  ["src/ErrorBondary/*"],
+        "images":  ["src/images/*"],
+        "meta":  ["src/meta/*"],
+        "plays":  ["src/plays/*"]
       },
   },
-  "include": ["src/**/*", "vite.config.ts", "public/serviceWorker.js", "src/globals.d.ts"],
-  "exclude": ["node_modules", "dist"],
+  "include": ["src","src/**/*", "vite.config.ts", "public/serviceWorker.js", "src/globals.d.ts"],
+  "exclude": ["dist"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

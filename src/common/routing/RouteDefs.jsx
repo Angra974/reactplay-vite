@@ -1,21 +1,61 @@
+import loadable from '@loadable/component';
+
 import App from '@/App';
-import {
-  Footer,
-  Header,
-  Home,
-  PlayMeta,
-  DefMeta,
-  PlayIdeas,
-  CreatePlay,
-  PlayCreated,
-  TechStack,
-  LeaderBoard,
-  PageNotFound
-} from 'common';
-import PlayList from 'common/playlists/PlayList';
+const Footer = loadable(() => import('common/index.js'), {
+  resolveComponent: (components) => components.Footer,
+});
+const Header = loadable(() => import('common/index.js'), {
+  resolveComponent: (components) => components.Header,
+});
+const Home = loadable(() => import('common/index.js'), {
+  resolveComponent: (components) => components.Home,
+});
+
+const PlayMeta = loadable(() => import('common/index.js'), {
+  resolveComponent: (components) => components.PlayMeta,
+});
+
+const DefMeta = loadable(() => import('common/index.js'), {
+  resolveComponent: (components) => components.DefMeta,
+});
+
+const PlayIdeas = loadable(() => import('common/index.js'), {
+  resolveComponent: (components) => components.PlayIdeas,
+});
+
+const CreatePlay = loadable(() => import('common/index.js'), {
+  resolveComponent: (components) => components.CreatePlay,
+});
+
+const PlayCreated = loadable(() => import('common/index.js'), {
+  resolveComponent: (components) => components.PlayCreated,
+});
+
+
+const TechStack = loadable(() => import('common/index.js'), {
+  resolveComponent: (components) => components.TechStack,
+});
+
+
+const LeaderBoard = loadable(() => import('common/index.js'), {
+  resolveComponent: (components) => components.LeaderBoard,
+});
+
+
+const PageNotFound = loadable(() => import('common/index.js'), {
+  resolveComponent: (components) => components.PageNotFound,
+});
+
+const PlayList = loadable(() => import('common/playlists/PlayList.jsx'), {
+  resolveComponent: (components) => components.PlayList,
+});
+
+const BadgesDashboard = loadable(() => import('common/badges-dashboard/index.jsx'), {
+  resolveComponent: (components) => components.PlayList,
+});
+
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { NhostClient, NhostProvider } from '@nhost/react';
-import BadgesDashboard from 'common/badges-dashboard';
 
 const nhost = new NhostClient({
   backendUrl: process.env.REACT_APP_NHOST_BACKEND_URL || ''

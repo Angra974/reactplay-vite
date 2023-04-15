@@ -8,7 +8,8 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
-    'plugin:prettier/recommended'
+    'plugin:prettier/recommended',
+    "plugin:jsx-a11y/recommended"
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -18,12 +19,33 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module'
   },
-  plugins: ['react-hooks', 'react', '@typescript-eslint', 'prettier'],
+  plugins: [
+    'react-hooks',
+    'react',
+    '@typescript-eslint',
+    'prettier',
+    'jsx-a11y'
+  ],
   ignorePatterns: ['**/plays/index.js'],
 
   rules: {
+    "jsx-a11y/alt-text": "warn",
+    "jsx-a11y/aria-role": "warn",
+    "jsx-a11y/no-static-element-interactions": [
+      "error",
+      {
+        "handlers": [
+          "onClick"
+        ]
+      }
+    ],
+    "jsx-a11y/label-has-associated-control": [ 2, {
+      "labelComponents": ["Label"],
+      "labelAttributes": ["label"],
+      "controlComponents": ["Input"],
+      "depth": 3
+    }],
     'import/extensions': 0,
-
     'import/no-named-as-default-member': 0,
     'react/prop-types': 0,
     'react/display-name': 0,

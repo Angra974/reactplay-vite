@@ -4,6 +4,7 @@ import './search.css';
 import orderBy from 'lodash.orderby';
 import isObject from 'lodash.isobject';
 import useFetchFilterData from './hooks/usePlayFilter';
+import { nanoid } from 'nanoid'
 
 import { FIELD_TEMPLATE } from './filter-template';
 import { TextField, Checkbox, Autocomplete } from '@mui/material';
@@ -31,7 +32,7 @@ const FilterPlays = ({ onChange, query }) => {
         {
           name: 'TypeScript',
           value: 'ts',
-          icon: 'https://res.cloudinary.com/dgtdljyul/image/upload/v1675409456/ts_yrzjge.png'
+         icon: 'https://res.cloudinary.com/dgtdljyul/image/upload/v1675409456/ts_yrzjge.png'
         }
       ];
       setLoadedData(data);
@@ -151,7 +152,7 @@ const FilterPlays = ({ onChange, query }) => {
             options={
               field.sorted
                 ? orderBy(loadedData[field.datafield], [field.fieldName], ['asc'])
-                : loadedData[field.datafield]
+                : loadedData[field?.datafield] ? loadedData[field.datafield] : ''
             }
             renderInput={(params) => (
               <TextField {...params} placeholder={field.placeholder} size="small" />
@@ -228,7 +229,7 @@ const FilterPlays = ({ onChange, query }) => {
       >
         {FIELD_TEMPLATE.map((field, field_i) => {
           return (
-            <div className="flex flex-col md:flex-row p-2" key={field_i}>
+            <div className="flex flex-col md:flex-row p-2" key={nanoid()}>
               <div className="w-32">
                 {field.display}
                 {field.required ? '*' : ''}

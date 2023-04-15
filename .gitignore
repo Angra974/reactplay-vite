@@ -12,6 +12,10 @@
 
 # production
 /build
+/dist
+
+# development
+/dev-dist
 
 # misc
 .env

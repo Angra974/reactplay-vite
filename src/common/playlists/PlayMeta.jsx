@@ -19,6 +19,13 @@ function PlayMeta() {
   const [ogTagImage, setOgTagImage] = useState();
   // const [localImage, setLocalImage] = useState(thumbPlay);
 
+
+  const renderPlayComponent = () => {
+    const Comp = plays[play.component || toSanitized(play.title_name)];
+
+    return <Comp {...play} />;
+  };
+
   /**
    * Fetch local playImage
    */
@@ -77,16 +84,9 @@ function PlayMeta() {
 
   if (loading) {
     return <Loader />;
-  }
-  if (isError || !play) {
+  } else if (isError || !play) {
     return <PageNotFound />;
-  }
-
-  const renderPlayComponent = () => {
-    const Comp = plays[play.component || toSanitized(play.title_name)];
-
-    return <Comp {...play} />;
-  };
+  } else {
 
   return (
     <>
@@ -104,6 +104,7 @@ function PlayMeta() {
       <Suspense fallback={<Loader />}>{renderPlayComponent()}</Suspense>
     </>
   );
+  }
 }
 
 export default PlayMeta;
