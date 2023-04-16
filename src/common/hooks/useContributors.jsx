@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import useFetch from 'common/hooks/useFetch';
 
 /**
  * Retrieves the contributors name in react play repo on github
@@ -16,16 +15,17 @@ const useContributors = (sorted) => {
     const fetchData = async () => {
       setIsLoading(true);
       try {
-        const { data, loading, error } = await useFetch(
-          `${process.env.REACT_APP_PLAY_API_URL}/contributors`
+        const response = await fetch(
+          `https://api.github.com/repos/reactplay/react-play/contributors`
         );
+        const responseData = await response.json();
 
         // Remove the bots
-        const contributors = data.filter((contributor) => contributor.type !== 'Bot');
+        const contributors = responseData.filter((contributor) => contributor.type !== 'Bot');
 
         // Sort it by the contributions
         sorted && contributors.sort((a, b) => b.contributions - a.contributions);
-        if (error) setError(error);
+
         setData(contributors);
         setIsLoading(false);
       } catch (error) {

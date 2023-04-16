@@ -165,7 +165,7 @@
   fill: var(--color-neutral-90);
 }
 
-@media screen and (max-width: 576px) {
+@media screen and (max-width: 480px) {
   .app-home-body .body-c2a {
     flex-direction: column;
     width: 80%;

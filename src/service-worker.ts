@@ -8,11 +8,12 @@ import { CacheableResponsePlugin } from 'workbox-cacheable-response';
 
 declare let self: ServiceWorkerGlobalScope
 
+// clean old assets
+cleanupOutdatedCaches()
+
 // self.__WB_MANIFEST is default injection point
 precacheAndRoute(self.__WB_MANIFEST)
 
-// clean old assets
-cleanupOutdatedCaches()
 
 const fileExtensionRegexp = new RegExp('/[^/?]+\\.[^/]+$');
 
@@ -32,7 +33,7 @@ registerRoute(
 // to allow work offline
 registerRoute(new NavigationRoute(
   createHandlerBoundToURL('index.html'),
-  { 
+  {
 	  whitelist: allowlist,
   blacklist: fileExtensionRegexp },
 ))

@@ -1,7 +1,18 @@
+import {  useEffect } from 'react';
 import useContributors from 'common/hooks/useContributors';
+import useFetch from 'common/hooks/useFetch';
 
-const Contributors = () => {
-  const { data, error, isLoading } = useContributors(true);
+const Contributors = ({sorted = false}) => {
+  let { data, error, isLoading } = useFetch(
+          `${process.env.REACT_APP_PLAY_API_URL}/react-play/contributors`
+        )
+
+  if(data) {
+    data  = data.filter((contributor) => contributor.type !== 'Bot');
+    if(sorted) {
+      data = data.sort((a, b) => b.contributions - a.contributions)
+    }
+  }
 
   return (
     <>
@@ -12,8 +23,6 @@ const Contributors = () => {
         <br /> to All Contributors!
       </h2>
       <ul className="list-contributors">
-        {isLoading && <li>Loading...</li>}
-        {error && <li>Error: {error.message}</li>}
         {data &&
           data.map((contributor) => (
             <li
@@ -37,6 +46,7 @@ const Contributors = () => {
               </a>
             </li>
           ))}
+
       </ul>
     </>
   );

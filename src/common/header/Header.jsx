@@ -5,7 +5,7 @@ import Countdown from 'react-countdown';
 import './header.css';
 import { SearchBox } from 'common/search/SearchBox';
 
-const Header = () => {
+const Header = ({}) => {
   const location = useLocation();
   const pathName = location.pathname;
 

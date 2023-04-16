@@ -3,11 +3,14 @@ import { useReducer, useEffect, useRef } from 'react';
 import { useAuthenticationStatus, useUserData } from '@nhost/react';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import loadable from '@loadable/component';
+import 'react-toastify/dist/ReactToastify.min.css';
 
 // COMPONENTS & FILES
 import PlayForm from 'common/components/PlayForms';
 import Loader from 'common/spinner/spinner';
 import PageNotFound from 'common/404/PageNotFound';
+const Notification = loadable(() => import('common/components/Notification.jsx'));
 
 // UTILS
 import { FIELD_TEMPLATE } from './create-play-form-template';
@@ -200,6 +203,7 @@ const CreatePlay = () => {
   }
 
   return (
+    <>
     <div className="w-full h-full flex flex-col justify-center items-center create-plays-wrapper">
       <div>
         <span className="title-primary">
@@ -229,6 +233,8 @@ const CreatePlay = () => {
         </div>
       </div>
     </div>
+    <Notification />
+    </>
   );
 };
 

@@ -11,120 +11,9 @@ import eslintPlugin from "@nabla/vite-plugin-eslint";
 import { resolve } from "path";
 import type { ManifestOptions, VitePWAOptions } from 'vite-plugin-pwa'
 import { VitePWA } from 'vite-plugin-pwa'
-import replace from '@rollup/plugin-replace'
+//import replace from '@rollup/plugin-replace'
 //import manifest from './manifest.json';
 
-
-// const pwaOptions: Partial<VitePWAOptions> = {
-  // mode: 'development',
-  // base: '/',
-  // includeAssets: ['favicon.svg'],
-  // manifest: manifest,
-  // devOptions: {
-    // enabled: process.env.SW_DEV === 'true',
-    // /* when using generateSW the PWA plugin will switch to classic */
-    // type: 'module',
-    // navigateFallback: 'index.html',
-  // },
-// }
-
-// const replaceOptions = { __DATE__: new Date().toISOString() }
-// const reload = true
-// const selfDestroying = true
-
-  // pwaOptions.srcDir = 'src'
-  // pwaOptions.filename = 'service-worker.ts'
-  // pwaOptions.strategies = 'injectManifest';
-  // (pwaOptions.manifest as Partial<ManifestOptions>).name = 'PWA Inject Manifest';
-  // (pwaOptions.manifest as Partial<ManifestOptions>).short_name = 'PWA Inject';
-  // pwaOptions.registerType = 'autoUpdate'
-
-// if (reload) {
-//  @ts-expect-error just ignore
-  // replaceOptions.__RELOAD_SW__ = 'true'
-// }
-
-// if (selfDestroying)
-  // pwaOptions.selfDestroying = selfDestroying
-
-
-
-export default defineConfig(({ command, mode }) => {
-   // Load app-level env vars to node-level env vars.
-   const localEnv = loadEnv(mode, process.cwd(), '')
-	const { DEV_PORT = 3000 } = localEnv;
-  	const isDevelopment = mode === "development";
-
-	const htmlPlugin = () => {
-        return {
-            name: "html-transform",
-            transformIndexHtml(html: string) {
-                return html.replace(/%(.*?)%/g, function (match, p1) {
-                    return localEnv[p1];
-                });
-            },
-        };
-    };
-
-
-  return {
-	plugins: [
-		viteCompression(),
-		htmlPlugin(),
-		EnvironmentPlugin('all', { prefix: 'REACT_APP_' }),
-		react({
-      		jsxRuntime: "classic"
-    	}),
-		viteTsconfigPaths(),
-		svgrPlugin(),
-		splitVendorChunkPlugin(),
-		chunkSplitPlugin({
-      		strategy: 'default',
-    	}),
-		VitePWA(manifestForPlugin),
-		eslintPlugin({fix: true}),
-  ],
-  resolve: {
-      	alias: {
-        "@": resolve(__dirname, "src"),
-		common: resolve(__dirname, "src/common"),
-		ErrorBoundary: resolve(__dirname, "src", "ErrorBoundary"),
-		images: resolve(__dirname, "src", "images"),
-		meta: resolve(__dirname, "src", "meta"),
-		plays: resolve(__dirname, "src", "plays"),
-
-      	},
-    },
-	// https://github.com/vitejs/vite/issues/1973#issuecomment-787571499
-	envPrefix: 'REACT_APP_',
-    define: {
-		'process.env': localEnv
-//      "process.env.NODE_ENV": `"${mode}"`
-    },
-	server: {
-    port: DEV_PORT,
-  },
-//  envPrefix: 'VITE_',
-	build: {
-		chunkSizeWarningLimit: 1600,
-		minify:'terser',
-		target: 'esnext',
-		terserOptions: {
-			output: {
-			comments: false, // This will remove all comments from the output files
-			},
-		},
-	},
-	 css: {
-      modules: {
-        generateScopedName: isDevelopment
-          ? "[name]__[local]__[hash:base64:5]"
-          : "[hash:base64:5]",
-      },
-    },
-	}
-
-})
 
 const manifestForPlugin  = {
 		srcDir: 'src',
@@ -147,13 +36,13 @@ const manifestForPlugin  = {
 				sizes: "192x192",
 				type: "image/png",
 			},
-			
+
 			{
 				src: "/logo152x152.png",
 				sizes: "152x152",
 				type: "image/png",
 			},
-		
+
         {
             "src": "/logo256x256.png",
             "sizes": "256x256",
@@ -168,7 +57,7 @@ const manifestForPlugin  = {
             "src": "/logo512x512.png",
             "sizes": "512x512",
             "type": "image/png"
-        },	
+        },
 			{
 				src: "/logo48x48.png",
 				sizes: "48x48",
@@ -201,7 +90,8 @@ const manifestForPlugin  = {
 		display: "standalone",
 		base: "/",
 		scope: "/",
-		start_url: "/",
+		  id: "ReactPlay",
+		  start_url: "/?homescreen=1",
 		orientation: "portrait",
 		},
 	// switch to "true" to enable sw on development
@@ -256,3 +146,84 @@ const manifestForPlugin  = {
         // ],
       // },
 }
+
+
+
+
+export default defineConfig(({ command, mode }) => {
+   // Load app-level env vars to node-level env vars.
+   const localEnv = loadEnv(mode, process.cwd(), '')
+	const { DEV_PORT = 3000 } = localEnv;
+  	const isDevelopment = mode === "development";
+
+	const htmlPlugin = () => {
+        return {
+            name: "html-transform",
+            transformIndexHtml(html: string) {
+                return html.replace(/%(.*?)%/g, function (match, p1) {
+                    return localEnv[p1];
+                });
+            },
+        };
+    };
+
+
+  return {
+	plugins: [
+		EnvironmentPlugin('all', { prefix: 'REACT_APP_' }),
+		htmlPlugin(),
+		react({
+      		jsxRuntime: "classic"
+    	}),
+		viteTsconfigPaths(),
+		svgrPlugin(),
+		splitVendorChunkPlugin(),
+		chunkSplitPlugin({
+      		strategy: 'default',
+    	}),
+		VitePWA(manifestForPlugin),
+		viteCompression(),
+//		eslintPlugin({fix: true}),
+  ],
+  resolve: {
+      	alias: {
+        "@": resolve(__dirname, "src"),
+		common: resolve(__dirname, "src/common"),
+		ErrorBoundary: resolve(__dirname, "src", "ErrorBoundary"),
+		images: resolve(__dirname, "src", "images"),
+		meta: resolve(__dirname, "src", "meta"),
+		plays: resolve(__dirname, "src", "plays"),
+
+      	},
+    },
+	// https://github.com/vitejs/vite/issues/1973#issuecomment-787571499
+	envPrefix: 'REACT_APP_',
+    define: {
+		'process.env': localEnv
+//      "process.env.NODE_ENV": `"${mode}"`
+    },
+	server: {
+    port: DEV_PORT,
+  },
+//  envPrefix: 'VITE_',
+	build: {
+		chunkSizeWarningLimit: 1600,
+		minify:'terser',
+		target: 'esnext',
+		terserOptions: {
+			output: {
+			comments: false, // This will remove all comments from the output files
+			},
+		},
+	},
+	 css: {
+      modules: {
+        generateScopedName: isDevelopment
+          ? "[name]__[local]__[hash:base64:5]"
+          : "[hash:base64:5]",
+      },
+    },
+	}
+
+})
+

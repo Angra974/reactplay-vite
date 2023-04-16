@@ -1,20 +1,25 @@
-import { lazy, useEffect, useState } from 'react';
+import React, { lazy, useEffect, useState } from 'react';
 import RouteDefs from 'common/routing/RouteDefs';
 import { SearchContextProvider } from 'common/search/search-context';
+import loadable from '@loadable/component';
 import './index.css';
 
 import { createRoot } from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
 import { registerSW } from "virtual:pwa-register";
-
+import {whyDidYouUpdate}  from 'why-did-you-update';
 import ErrorBoundry from './ErrorBoundary/ErrorBoundary';
 // import Notification from 'common/components/Notification';
-import 'react-toastify/dist/ReactToastify.min.css';
+//import 'react-toastify/dist/ReactToastify.min.css';
 
 // inside your starter code, do this
 
-const Notification = lazy(() => import('common/components/Notification'));
+///const Notification = loadable(() => import('common/components/Notification.jsx'));
 
+if (process.env.NODE_ENV !== 'production') {
+
+
+}
 // add this to prompt for a refresh
 const updateSW = registerSW({
   onNeedRefresh() {
@@ -61,14 +66,15 @@ const Index = () => {
     <ErrorBoundry>
         <SearchContextProvider value={value}>
           <RouteDefs />
-          <Notification />
         </SearchContextProvider>
+        {/* <Notification /> */}
     </ErrorBoundry>
     // </React.StrictMode>
   );
 };
 const container = document.getElementById('root');
-createRoot(container).render(<Index />);
+const root = createRoot(container);
+root.render(<Index />);
 
 // Makes the app to work offline and load faster
 //register();
@@ -77,3 +83,8 @@ createRoot(container).render(<Index />);
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
+
+// if (process.env.NODE_ENV !== 'production') {
+
+//   whyDidYouUpdate(React);
+// }
