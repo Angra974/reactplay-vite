@@ -1,7 +1,9 @@
 import { useEffect, useState, Suspense, useCallback } from 'react';
 import { Helmet } from 'react-helmet';
-import * as plays from 'plays';
+import loadable from '@loadable/component';
 import { useParams } from 'react-router-dom';
+
+import { default as plays } from 'plays/playsList';
 import { submit } from 'common/services/request';
 import Loader from 'common/spinner/spinner';
 import { toSanitized, toTitleCaseTrimmed } from 'common/services/string';
@@ -9,6 +11,7 @@ import { FetchPlaysBySlugAndUser } from 'common/services/request/query/fetch-pla
 import { PageNotFound } from 'common';
 import thumbPlay from 'images/thumb-play.png';
 import { getProdUrl } from 'common/utils/commonUtils';
+
 
 function PlayMeta() {
   const [loading, setLoading] = useState(true);
@@ -19,11 +22,21 @@ function PlayMeta() {
   const [ogTagImage, setOgTagImage] = useState();
   // const [localImage, setLocalImage] = useState(thumbPlay);
 
-
   const renderPlayComponent = () => {
-    const Comp = plays[play.component || toSanitized(play.title_name)];
+    console.dir(play);
+    console.dir(plays)
 
-    return <Comp {...play} />;
+    // component can have a totally differnt name compared to the component
+    if(plays.includes(play.title_name) || plays.includes(play.component) ) {
+        const ext = play.language === 'js' ? 'jsx' : 'tsx';
+        const fileName = plays.includes(play.component) ? play.component : play.title_name ;
+        const element = `../..${play.path}/${fileName}.${ext}`;
+        console.dir(element);
+        const Comp = loadable(() => import(/* vite-ignore */ element));
+        return <Comp {...play} />
+    }
+
+    return <PageNotFound />
   };
 
   /**

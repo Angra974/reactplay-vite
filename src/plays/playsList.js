@@ -1,5 +1,7 @@
 export default [
-	'CodeEditor',
-	'Codenchill',
+	"CodeEditor",
+	"Codenchill",
+	"CurrentTimer",
+	"TwentyFourtyEight"
 ]
 

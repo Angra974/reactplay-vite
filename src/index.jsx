@@ -1,4 +1,6 @@
-import React, { lazy, useEffect, useState } from 'react';
+import './wdyr'; // <--- first import
+
+import React, { useEffect, useState } from 'react';
 import RouteDefs from 'common/routing/RouteDefs';
 import { SearchContextProvider } from 'common/search/search-context';
 import loadable from '@loadable/component';
@@ -7,7 +9,6 @@ import './index.css';
 import { createRoot } from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
 import { registerSW } from "virtual:pwa-register";
-import {whyDidYouUpdate}  from 'why-did-you-update';
 import ErrorBoundry from './ErrorBoundary/ErrorBoundary';
 // import Notification from 'common/components/Notification';
 //import 'react-toastify/dist/ReactToastify.min.css';
@@ -41,15 +42,18 @@ if (process.env.NODE_ENV !== 'development') {
   console.disableYellowBox = true;
 }
 
-const Index = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [showShareModal, setShowShareModal] = useState(false);
-  const [filterQuery, setFilterQuery] = useState({
+const initialQuery = {
     level_id: [],
     tags: [],
     owner_user_id: [],
     language: []
-  });
+  }
+
+
+const Index = () => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [showShareModal, setShowShareModal] = useState(false);
+  const [filterQuery, setFilterQuery] = useState(initialQuery);
 
 
   const value = {
@@ -83,8 +87,3 @@ root.render(<Index />);
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
-
-// if (process.env.NODE_ENV !== 'production') {
-
-//   whyDidYouUpdate(React);
-// }

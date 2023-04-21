@@ -1,6 +1,6 @@
 import loadable from '@loadable/component';
-
 import App from '@/App';
+
 const Footer = loadable(() => import('common/index.js'), {
   resolveComponent: (components) => components.Footer,
 });
@@ -46,13 +46,19 @@ const PageNotFound = loadable(() => import('common/index.js'), {
   resolveComponent: (components) => components.PageNotFound,
 });
 
-const PlayList = loadable(() => import('common/playlists/PlayList.jsx'), {
-  resolveComponent: (components) => components.PlayList,
+const Modal = loadable(() => import('common/index.js'), {
+  resolveComponent: (components) => components.Modal,
 });
 
-const BadgesDashboard = loadable(() => import('common/badges-dashboard/index.jsx'), {
-  resolveComponent: (components) => components.PlayList,
+const ExtendedFooter = loadable(() => import('common/index.js'), {
+  resolveComponent: (components) => components.ExtendedFooter,
 });
+
+const PlayList = loadable(() => import('common/playlists/PlayList.jsx'));
+
+const BadgesDashboard = loadable(() => import('common/badges-dashboard/index.jsx'));
+
+
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { NhostClient, NhostProvider } from '@nhost/react';
@@ -84,7 +90,6 @@ const RouteDefs = () => {
           <Route element={<Home />} path="/" />
           <Route element={<TechStack />} path="/tech-stacks" />
           <Route element={<CreatePlay />} path="/editplay/:username/:playname" />
-          <Route element={<PageNotFound />} path="*" />
           <Route element={<App />} path="/plays">
             <Route index element={<PlayList />} />
             <Route exact element={<CreatePlay />} path="create" />
@@ -115,6 +120,7 @@ const RouteDefs = () => {
           </Route>
           <Route element={<PlayIdeas />} path="/ideas" />
           <Route element={<LeaderBoard />} path="/leaderboard" />
+          <Route element={<PageNotFound />} path="*" />
         </Routes>
         <Footer />
       </BrowserRouter>

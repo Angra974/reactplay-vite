@@ -4,7 +4,7 @@ import { BsTwitter, BsGithub, BsTrophyFill } from 'react-icons/bs';
 import { FaLightbulb } from 'react-icons/fa';
 import { BiMoney } from 'react-icons/bi';
 import { IoAddSharp, IoShareSocial, IoHeartSharp } from 'react-icons/io5';
-import { MdManageSearch, MdClose } from 'react-icons/md';
+import { MdApps, MdManageSearch, MdClose } from 'react-icons/md';
 import SocialShare from 'common/components/SocialShare';
 import { GoX } from 'react-icons/go';
 import { Modal, Box, Typography, Menu } from '@mui/material';
@@ -102,6 +102,17 @@ const HeaderNav = ({ showBrowse }) => {
                 <span className="btn-label">Create</span>
               </a>
             )}
+          </li>
+          <li>
+            <Link
+              className="app-header-btn app-header-btn--default"
+              data-testid="plays-btn"
+              title="Plays"
+              to="/plays"
+            >
+              <MdApps className="icon plays-icon" />
+              <span className="btn-label">Plays</span>
+            </Link>
           </li>
           <li>
             <Link
